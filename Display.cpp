@@ -59,7 +59,15 @@ Display::clearRow(unsigned int row)
 void
 Display::print(string data)
 {
-    write(ttyfd_, data.c_str(), data.length());
+    size_t i, len;
+
+    /* Write the data in 16 byte chunks */
+    len = data.length();
+    for (i = 0, i < len; i += 16)
+        write(ttyfd_, data.substring(i, 16).c_str(), 16);
+
+    /* Determine the remaning bits by masking out len */
+    write(ttyfd_, data.substring(len & 0xf0, string::npos), len & 0x0f)
 }
 
 void
