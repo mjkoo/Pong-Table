@@ -12,14 +12,17 @@ public:
         kWidth = 20,
         kCommand = 0xfe,
         kClear = 0x01,
-        kSetCursorPos = 0x80
+        kSetCursorPos = 0x80,
+        kDisplayControl = 0x08,
+        kCursorBlinking = 0x01,
+        kCursorVisible = 0x02
     };
 
     Display(std::string dev);
     virtual ~Display();
 
     void clear();
-    void clearLine(unsigned int line);
+    void clearRow(unsigned int row);
     void print(std::string data);
 
     void setCursorPos(unsigned int row, unsigned int col);
@@ -28,9 +31,11 @@ public:
     void pushCursorPos();
     void popCursorPos();
 private:
+    void command(unsigned char cmd);
     void writeByte(unsigned char byte);
 
     int ttyfd_;
+    std::pair<unsigned int, unsigned int> cursorPos_;
     std::stack<std::pair<unsigned int, unsigned int> > cursorStack_;
 };
 

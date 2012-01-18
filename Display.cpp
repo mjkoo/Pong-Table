@@ -1,10 +1,10 @@
 #include "Display.h"
 
-#include <cstring>
 #include <string>
 
-#include <termios.h>
 #include <fcntl.h>
+#include <termios.h>
+#include <string.h>
 
 using namespace std;
 
@@ -28,6 +28,9 @@ Display::Display(string dev)
     cfsetospeed(&tio, B9600);
     cfsetispeed(&tio, B9600);
     tcsetattr(ttyfd_, TCSANOW, &tio);
+
+    clear();
+    setCursorPos(0, 0);
 }
 
 Display::~Display()
@@ -43,9 +46,65 @@ Display::clear()
 }
 
 void
+Display::clearRow(unsigned int row)
+{
+    string clearString(20, ' ');
+
+    pushCursorPos();
+    setCursorPos(row, 0);
+    print(clearString);
+    popCursorPos();
+}
+
+void
 Display::print(string data)
 {
     write(ttyfd_, data.c_str(), data.length());
+}
+
+void
+Display::setCursorPos(unsigned int row, unsigned int col)
+{
+    unsigned int rowOffset[4] = {0x00, 0x40, 0x14, 0x54};
+
+    if (row >= kHeight || col >= kWidth)
+        return;
+
+    command(kSetCursorPos + rowOffset[row] + col);
+    cursorPos_.first = row;
+    cursorPos_.second = col;
+}
+
+void
+Display::setCursorVisible(bool visible)
+{
+
+}
+
+void
+Display::setCursorBlinking(bool blinking)
+{
+
+}
+
+void
+Display::pushCursorPos()
+{
+    cursorStack_.push(cursorPos_);
+}
+
+void
+Display::popCursorPos()
+{
+    cursorPos_ = cursorStack_.top();
+    cursorStack_.pop();
+}
+
+void
+Display::command(unsigned char cmd)
+{
+    writeByte(kCommand);
+    writeByte(cmd);
 }
 
 void
