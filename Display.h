@@ -7,15 +7,13 @@
 class Display
 {
 public:
-    enum {
-        kHeight = 4,
-        kWidth = 20,
-        kCommand = 0xfe,
-        kClear = 0x01,
-        kSetCursorPos = 0x80,
-        kCursorOn = 0x0d,
-        kCursorOff = 0x0c
-    };
+    static const unsigned int kHeight = 4;
+    static const unsigned int kWidth = 20;
+    static const unsigned int kCommand = 0xfe;
+    static const unsigned int kClear = 0x01;
+    static const unsigned int kSetCursorPos = 0x80;
+    static const unsigned int kCursorOn = 0x0d;
+    static const unsigned int kCursorOff = 0x0c;
 
     Display(std::string dev);
     virtual ~Display();

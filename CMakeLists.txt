@@ -11,6 +11,7 @@ set(HDRS
     ./IdleFrame.h
     ./ListFrame.h
     ./Player.h
+    ./TextFrame.h
     ./ViewFrame.h
 )
 
@@ -22,6 +23,7 @@ set(SRCS
     ./IdleFrame.cpp
     ./ListFrame.cpp
     ./Player.cpp
+    ./TextFrame.cpp
     ./ViewFrame.cpp
 )
 

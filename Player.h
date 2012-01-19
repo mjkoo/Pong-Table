@@ -26,14 +26,12 @@ enum state_t
 class Player
 {
 public:
-    enum {
-        kUpMask = 0x4000,
-        kDownMask = 0x2000,
-        kLeftMask = 0x1000,
-        kRightMask = 0x0800,
-        kEnterMask = 0x0400,
-        kCupMask = 0x03ff
-    };
+    static const unsigned int kUpMask = 0x4000;
+    static const unsigned int kDownMask = 0x2000;
+    static const unsigned int kLeftMask = 0x1000;
+    static const unsigned int kRightMask = 0x0800;
+    static const unsigned int kEnterMask = 0x0400;
+    static const unsigned int kCupMask = 0x03ff;
 
     Player(Display *display);
     virtual ~Player();

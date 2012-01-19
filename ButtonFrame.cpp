@@ -99,6 +99,18 @@ ButtonFrame::getDisplay()
     return display_;
 }
 
+unsigned int
+ButtonFrame::getCursorRow()
+{
+    return currentButton_.first;
+}
+
+unsigned int
+ButtonFrame::getCursorCol()
+{
+    return currentButton_.second;
+}
+
 void
 ButtonFrame::initializeButtons()
 {
@@ -112,6 +124,17 @@ ButtonFrame::addButton(unsigned int row, unsigned int col, string label, buttonc
     assert(col + label.length() <= Display::kWidth);
 
     buttons_[row][col] = new Button(row, col, label, cb);
+}
+
+void
+ButtonFrame::removeButton(unsigned int row, unsigned int col)
+{
+    assert(row < Display::kHeight);
+    assert(col < Display::kWidth);
+    assert(buttons_[row][col] != NULL);
+
+    delete buttons_[row][col];
+    buttons_[row][col] = NULL;
 }
 
 void
@@ -131,17 +154,17 @@ void
 ButtonFrame::focusNextButton(direction_t direction)
 {
     int dc;
-    unsigned int row, col;
+    int row, col;
 
     if (direction == UP) {
         col = currentButton_.second;
         for (row = currentButton_.first - 1; row >= 0; row--)
             for (dc = 0; dc < Display::kWidth; dc++) {
-                if ((col + dc) < Display::kWidth && buttons_[row][col + dc] != NULL) {
+                if (col + dc < Display::kWidth && buttons_[row][col + dc] != NULL) {
                     focusButton(row, col + dc);
                     return;
                 }
-                if ((col - dc >= 0) && buttons_[row][col - dc] != NULL) {
+                if (col >= dc && buttons_[row][col - dc] != NULL) {
                     focusButton(row, col - dc);
                     return;
                 }
@@ -154,12 +177,15 @@ ButtonFrame::focusNextButton(direction_t direction)
                     focusButton(row, col + dc);
                     return;
                 }
-                if (col - dc >= 0 && buttons_[row][col - dc] != NULL) {
+                if (col >= dc && buttons_[row][col - dc] != NULL) {
                     focusButton(row, col - dc);
                     return;
                 }
             }
     } else if (direction == LEFT) {
+        if (currentButton_.second == 0)
+            return;
+
         row = currentButton_.first;
         for (col = currentButton_.second - 1; col >=0; col--)
             if (buttons_[row][col] != NULL) {
@@ -167,6 +193,9 @@ ButtonFrame::focusNextButton(direction_t direction)
                 return;
             }
     } else if (direction == RIGHT) {
+        if (currentButton_.second == Display::kWidth - 1)
+            return;
+
         row = currentButton_.first;
         for (col = currentButton_.second + 1; col < Display::kWidth; col++)
             if (buttons_[row][col] != NULL) {

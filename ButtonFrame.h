@@ -49,9 +49,12 @@ public:
     virtual void exit();
 
     Display *getDisplay();
+    unsigned int getCursorRow();
+    unsigned int getCursorCol();
 protected:
     virtual void initializeButtons();
     void addButton(unsigned int row, unsigned int col, std::string label, buttoncb_t cb);
+    void removeButton(unsigned int row, unsigned int col);
     void focusButton(unsigned int row, unsigned int col);
     void focusNextButton(direction_t direction);
 

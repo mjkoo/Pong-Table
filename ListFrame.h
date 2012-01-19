@@ -12,9 +12,7 @@
 class ListFrame : public Frame
 {
 public:
-    enum {
-        kLines = 3
-    };
+    static const unsigned int kLines = 3;
 
     ListFrame(Display *display);
     virtual ~ListFrame();
