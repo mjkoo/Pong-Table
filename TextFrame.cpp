@@ -32,6 +32,27 @@ TextFrame::exit()
     ButtonFrame::exit();
 }
 
+string
+TextFrame::getText()
+{
+    return text_;
+}
+
+void
+TextFrame::setText(string text)
+{
+    text_ = text;
+
+    getDisplay()->pushCursorPos();
+    getDisplay()->clearRow(kTextRow);
+    getDisplay()->setCursorPos(kTextRow, 0);
+    getDisplay()->print(text_);
+    getDisplay()->popCursorPos();
+
+    if (getCursorRow() == kTextRow)
+        getDisplay()->setCursorPos(kTextRow, text_.size());
+}
+
 void
 TextFrame::initializeButtons()
 {

@@ -22,6 +22,9 @@ public:
 
     void enter();
     void exit();
+
+    std::string getText();
+    void setText(std::string text);
 protected:
     void initializeButtons();
 
