@@ -6,8 +6,8 @@ using namespace std;
 
 const string TextFrame::keyboard = "abcdefghijklmnopqrstuvwxyz123456789";
 
-TextFrame::TextFrame(Display *display)
-  : ButtonFrame(display),
+TextFrame::TextFrame(Player *player)
+  : ButtonFrame(player),
     text_(),
     shift_(false)
 {
@@ -43,14 +43,14 @@ TextFrame::setText(string text)
 {
     text_ = text;
 
-    getDisplay()->pushCursorPos();
-    getDisplay()->clearRow(kTextRow);
-    getDisplay()->setCursorPos(kTextRow, 0);
-    getDisplay()->print(text_);
-    getDisplay()->popCursorPos();
+    getPlayer()->getDisplay()->pushCursorPos();
+    getPlayer()->getDisplay()->clearRow(kTextRow);
+    getPlayer()->getDisplay()->setCursorPos(kTextRow, 0);
+    getPlayer()->getDisplay()->print(text_);
+    getPlayer()->getDisplay()->popCursorPos();
 
     if (getCursorRow() == kTextRow)
-        getDisplay()->setCursorPos(kTextRow, text_.size());
+        getPlayer()->getDisplay()->setCursorPos(kTextRow, text_.size());
 }
 
 void
@@ -78,14 +78,14 @@ TextFrame::toggleShift()
 {
     shift_ = !shift_;
     
-    getDisplay()->pushCursorPos();
-    getDisplay()->setCursorPos(kKeyboardRow, 0);
+    getPlayer()->getDisplay()->pushCursorPos();
+    getPlayer()->getDisplay()->setCursorPos(kKeyboardRow, 0);
     if (shift_)
-        getDisplay()->print(boost::to_upper_copy(keyboard));
+        getPlayer()->getDisplay()->print(boost::to_upper_copy(keyboard));
     else
-        getDisplay()->print(keyboard);
+        getPlayer()->getDisplay()->print(keyboard);
 
-    getDisplay()->popCursorPos();
+    getPlayer()->getDisplay()->popCursorPos();
 }
 
 state_t
@@ -95,7 +95,7 @@ TextFrame::upButtonPressed(state_t currentState)
 
     ret = ButtonFrame::upButtonPressed(currentState);
     if (getCursorRow() == kTextRow)
-        getDisplay()->setCursorPos(kTextRow, text_.size());
+        getPlayer()->getDisplay()->setCursorPos(kTextRow, text_.size());
 
     return ret;
 }
@@ -107,7 +107,7 @@ TextFrame::downButtonPressed(state_t currentState)
 
     ret = ButtonFrame::downButtonPressed(currentState);
     if (getCursorRow() == kTextRow)
-        getDisplay()->setCursorPos(kTextRow, text_.size());
+        getPlayer()->getDisplay()->setCursorPos(kTextRow, text_.size());
 
     return ret;
 }
@@ -129,11 +129,11 @@ TextFrame::letterButtonClicked(state_t currentState, string label)
     else
         text_ += label;
 
-    getDisplay()->pushCursorPos();
-    getDisplay()->clearRow(kTextRow);
-    getDisplay()->setCursorPos(kTextRow, 0);
-    getDisplay()->print(text_);
-    getDisplay()->popCursorPos();
+    getPlayer()->getDisplay()->pushCursorPos();
+    getPlayer()->getDisplay()->clearRow(kTextRow);
+    getPlayer()->getDisplay()->setCursorPos(kTextRow, 0);
+    getPlayer()->getDisplay()->print(text_);
+    getPlayer()->getDisplay()->popCursorPos();
 
     return currentState;
 }
@@ -145,9 +145,9 @@ TextFrame::backspaceButtonClicked(state_t currentState, string label)
         return currentState;
 
     text_.erase(text_.end() - 1);
-    getDisplay()->setCursorPos(kTextRow, text_.size());
-    getDisplay()->print(" ");
-    getDisplay()->setCursorPos(kTextRow, text_.size());
+    getPlayer()->getDisplay()->setCursorPos(kTextRow, text_.size());
+    getPlayer()->getDisplay()->print(" ");
+    getPlayer()->getDisplay()->setCursorPos(kTextRow, text_.size());
 
     return currentState;
 }

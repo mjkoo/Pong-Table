@@ -6,8 +6,10 @@
 
 #include <assert.h>
 
+#include "ErrorFrame.h"
 #include "IdleFrame.h"
-#include "TextFrame.h"
+#include "LoginFrame.h"
+#include "PasswordFrame.h"
 #include "ViewFrame.h"
 
 using namespace std;
@@ -26,14 +28,19 @@ namespace {
     }
 }
 
-Player::Player(Display *display)
+Player::Player(string displayDevice, string databaseFile)
   : currentState_(kNoneState),
     currentFrame_(NULL),
-    stateMap_()
+    stateMap_(),
+    display_(Display(displayDevice)),
+    database_(Database(databaseFile)),
+    name_()
 {
-    stateMap_.insert(pair<state_t, Frame *>(kIdleState, new IdleFrame(display)));
-    stateMap_.insert(pair<state_t, Frame *>(kLoginState, new TextFrame(display)));
-    stateMap_.insert(pair<state_t, Frame *>(kViewState, new ViewFrame(display)));
+    stateMap_.insert(pair<state_t, Frame *>(kIdleState, new IdleFrame(this)));
+    stateMap_.insert(pair<state_t, Frame *>(kLoginState, new LoginFrame(this)));
+    stateMap_.insert(pair<state_t, Frame *>(kViewState, new ViewFrame(this)));
+    stateMap_.insert(pair<state_t, Frame *>(kPasswordState, new PasswordFrame(this)));
+    stateMap_.insert(pair<state_t, Frame *>(kErrorState, new ErrorFrame(this)));
 }
 
 Player::~Player()
@@ -41,6 +48,45 @@ Player::~Player()
     map<state_t, Frame *>::iterator it;
     for (it = stateMap_.begin(); it != stateMap_.end(); ++it)
         delete it->second;
+}
+
+Display *
+Player::getDisplay()
+{
+    return &display_;
+}
+
+Database *
+Player::getDatabase()
+{
+    return &database_;
+}
+
+string
+Player::getName()
+{
+    return name_;
+}
+
+void
+Player::setName(string name)
+{
+    name_ = name;
+}
+
+void
+Player::error(string msg, state_t returnState)
+{
+    ErrorFrame *ef;
+    map<state_t, Frame *>::iterator it;
+
+    it = stateMap_.find(kErrorState);
+    if (it == stateMap_.end())
+        return;
+
+    ef = static_cast<ErrorFrame *>(it->second);
+    ef->error(msg, returnState);
+    changeState(kErrorState);
 }
 
 void

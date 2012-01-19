@@ -6,10 +6,14 @@ project(pongtable)
 
 set(HDRS
     ./ButtonFrame.h
+    ./Database.h
     ./Display.h
+    ./ErrorFrame.h
     ./Frame.h
     ./IdleFrame.h
     ./ListFrame.h
+    ./LoginFrame.h
+    ./PasswordFrame.h
     ./Player.h
     ./TextFrame.h
     ./ViewFrame.h
@@ -18,10 +22,14 @@ set(HDRS
 set(SRCS
     ./main.cpp
     ./ButtonFrame.cpp
+    ./Database.cpp
     ./Display.cpp
+    ./ErrorFrame.cpp
     ./Frame.cpp
     ./IdleFrame.cpp
     ./ListFrame.cpp
+    ./LoginFrame.cpp
+    ./PasswordFrame.cpp
     ./Player.cpp
     ./TextFrame.cpp
     ./ViewFrame.cpp

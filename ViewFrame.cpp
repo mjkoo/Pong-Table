@@ -4,8 +4,8 @@
 
 using namespace std;
 
-ViewFrame::ViewFrame(Display *display)
-  : ListFrame(display)
+ViewFrame::ViewFrame(Player *player)
+  : ListFrame(player)
 {
 
 }
@@ -20,9 +20,9 @@ ViewFrame::enter()
 {
     ListFrame::enter();
 
-    getDisplay()->setCursorPos(0, 0);
-    getDisplay()->print("View Standings  DONE");
-    getDisplay()->setCursorPos(0, 16);
+    getPlayer()->getDisplay()->setCursorPos(0, 0);
+    getPlayer()->getDisplay()->print("View Standings  DONE");
+    getPlayer()->getDisplay()->setCursorPos(0, 16);
 }
 
 void

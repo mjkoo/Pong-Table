@@ -2,7 +2,9 @@
 #define PLAYER_H_
 
 #include <map>
+#include <string>
 
+#include "Database.h"
 #include "Display.h"
 
 class Frame;
@@ -20,6 +22,7 @@ enum state_t
     kTiedState,
     kWinningState,
     kOverState,
+    kErrorState,
     kNoneState
 };
 
@@ -33,16 +36,27 @@ public:
     static const unsigned int kEnterMask = 0x0400;
     static const unsigned int kCupMask = 0x03ff;
 
-    Player(Display *display);
+    Player(std::string displayDevice, std::string databaseFile);
     virtual ~Player();
 
+    Display *getDisplay();
+    Database *getDatabase();
+    
+    std::string getName();
+    void setName(std::string name);
+
     void run();
-private:
+protected:
+    void error(std::string msg, state_t returnState);
     void changeState(state_t nextState);
 
+private:
     state_t currentState_;
     Frame *currentFrame_;
     std::map<state_t, Frame *> stateMap_;
+    Display display_;
+    Database database_;
+    std::string name_;
 };
 
 #endif /* Player_H_ */

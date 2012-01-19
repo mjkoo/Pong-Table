@@ -4,8 +4,8 @@
 
 using namespace std;
 
-ListFrame::ListFrame(Display *display)
-  : display_(display),
+ListFrame::ListFrame(Player *player)
+  : player_(player),
     index_(0),
     items_()
 {
@@ -22,7 +22,7 @@ ListFrame::enter()
 {
     unsigned int i;
 
-    display_->clear();
+    player_->getDisplay()->clear();
     initializeList();
     refresh();
 }
@@ -33,10 +33,10 @@ ListFrame::exit()
 
 }
 
-Display *
-ListFrame::getDisplay()
+Player *
+ListFrame::getPlayer()
 {
-    return display_;
+    return player_;
 }
 
 void
@@ -44,6 +44,7 @@ ListFrame::append(string data)
 {
     assert(data.length() <= Display::kWidth);
     items_.push_back(data);
+    refresh();
 }
 
 void
@@ -54,6 +55,7 @@ ListFrame::insert(unsigned int pos, string data)
     
     vector<string>::iterator it = items_.begin() + pos;
     items_.insert(it, data);
+    refresh();
 }
 
 void
@@ -62,6 +64,7 @@ ListFrame::remove(unsigned int pos)
     assert(pos < items_.size());
     vector<string>::iterator it = items_.begin() + pos;
     items_.erase(it);
+    refresh();
 }
 
 unsigned int
@@ -76,13 +79,13 @@ ListFrame::refresh()
     unsigned int i, len;
 
     len = (items_.size() < kLines) ? items_.size() : kLines;
-    display_->pushCursorPos();
+    player_->getDisplay()->pushCursorPos();
     for (i = 0; i < len; i++) {
-        display_->clearRow(i + 1);
-        display_->setCursorPos(i + 1, 0);
-        display_->print(items_[(index_ + i) % items_.size()]);
+        player_->getDisplay()->clearRow(i + 1);
+        player_->getDisplay()->setCursorPos(i + 1, 0);
+        player_->getDisplay()->print(items_[(index_ + i) % items_.size()]);
     }
-    display_->popCursorPos();
+    player_->getDisplay()->popCursorPos();
 }
 
 void

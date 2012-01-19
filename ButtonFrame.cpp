@@ -43,8 +43,8 @@ Button::invoke(ButtonFrame *bf, state_t currentState)
     return (bf->*cb_)(currentState, label_);
 }
 
-ButtonFrame::ButtonFrame(Display *display)
-  : display_(display),
+ButtonFrame::ButtonFrame(Player *player)
+  : player_(player),
     currentButton_(0, 0)
 {
     unsigned int row, col;
@@ -69,14 +69,14 @@ ButtonFrame::enter()
 {
     unsigned int row, col;
 
-    display_->clear();
+    player_->getDisplay()->clear();
     initializeButtons();
 
     for (row = 0; row < Display::kHeight; row++)
         for (col = 0; col < Display::kWidth; col++)
             if (buttons_[row][col] != NULL) {
-                display_->setCursorPos(row, col);
-                display_->print(buttons_[row][col]->getLabel());
+                player_->getDisplay()->setCursorPos(row, col);
+                player_->getDisplay()->print(buttons_[row][col]->getLabel());
             }
 
     for (row = 0; row < Display::kHeight; row++)
@@ -93,10 +93,10 @@ ButtonFrame::exit()
 
 }
 
-Display *
-ButtonFrame::getDisplay()
+Player *
+ButtonFrame::getPlayer()
 {
-    return display_;
+    return player_;
 }
 
 unsigned int
@@ -147,7 +147,7 @@ ButtonFrame::focusButton(unsigned int row, unsigned int col)
     currentButton_.first = row;
     currentButton_.second = col;
 
-    display_->setCursorPos(row, col);
+    player_->getDisplay()->setCursorPos(row, col);
 }
 
 void

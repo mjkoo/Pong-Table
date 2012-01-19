@@ -17,7 +17,7 @@ public:
 
     static const std::string keyboard;
 
-    TextFrame(Display *display);
+    TextFrame(Player *player);
     virtual ~TextFrame();
 
     void enter();

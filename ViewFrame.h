@@ -11,7 +11,7 @@
 class ViewFrame : public ListFrame
 {
 public:
-    ViewFrame(Display *display);
+    ViewFrame(Player *player);
     virtual ~ViewFrame();
 
     void enter();

@@ -2,16 +2,14 @@
 #define IDLEFRAME_H_
 
 #include <string>
-#include <utility>
 
-#include "Display.h"
 #include "Player.h"
 #include "ButtonFrame.h"
 
 class IdleFrame : public ButtonFrame
 {
 public:
-    IdleFrame(Display *display);
+    IdleFrame(Player *player);
     virtual ~IdleFrame();
 
     void enter();

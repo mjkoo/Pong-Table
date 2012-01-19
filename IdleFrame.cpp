@@ -4,8 +4,8 @@
 
 using namespace std;
 
-IdleFrame::IdleFrame(Display *display)
-  : ButtonFrame(display)
+IdleFrame::IdleFrame(Player *player)
+  : ButtonFrame(player)
 {
 
 }
@@ -20,10 +20,10 @@ IdleFrame::enter()
 {
     ButtonFrame::enter();
 
-    getDisplay()->pushCursorPos();
-    getDisplay()->setCursorPos(0, 0);
-    getDisplay()->print("  Welcome to KSDA        PONG TABLE");
-    getDisplay()->popCursorPos();
+    getPlayer()->getDisplay()->pushCursorPos();
+    getPlayer()->getDisplay()->setCursorPos(0, 0);
+    getPlayer()->getDisplay()->print("  Welcome to KSDA        PONG TABLE");
+    getPlayer()->getDisplay()->popCursorPos();
 }
 
 void

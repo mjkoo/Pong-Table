@@ -42,13 +42,13 @@ private:
 class ButtonFrame : public Frame
 {
 public:
-    ButtonFrame(Display *display);
+    ButtonFrame(Player *player);
     virtual ~ButtonFrame();
 
     virtual void enter();
     virtual void exit();
 
-    Display *getDisplay();
+    Player *getPlayer();
     unsigned int getCursorRow();
     unsigned int getCursorCol();
 protected:
@@ -64,7 +64,7 @@ protected:
     virtual state_t rightButtonPressed(state_t currentState);
     virtual state_t enterButtonReleased(state_t currentState);
 private:
-    Display *display_;
+    Player *player_;
     Button *buttons_[Display::kHeight][Display::kWidth];
     std::pair<unsigned int, unsigned int> currentButton_;
 };

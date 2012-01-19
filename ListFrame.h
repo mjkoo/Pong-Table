@@ -14,13 +14,13 @@ class ListFrame : public Frame
 public:
     static const unsigned int kLines = 3;
 
-    ListFrame(Display *display);
+    ListFrame(Player *player_);
     virtual ~ListFrame();
 
     virtual void enter();
     virtual void exit();
 
-    Display *getDisplay();
+    Player *getPlayer();
 
     void append(std::string data);
     void insert(unsigned int pos, std::string data);
@@ -33,7 +33,7 @@ protected:
     virtual state_t upButtonPressed(state_t currentState);
     virtual state_t downButtonPressed(state_t currentState);
 private:
-    Display *display_;
+    Player *player_;
     unsigned int index_;
     std::vector<std::string> items_;
 };
