@@ -45,8 +45,8 @@ public:
     ButtonFrame(Display *display);
     virtual ~ButtonFrame();
 
-    void enter();
-    void exit();
+    virtual void enter();
+    virtual void exit();
 
     Display *getDisplay();
 protected:
@@ -55,18 +55,11 @@ protected:
     void focusButton(unsigned int row, unsigned int col);
     void focusNextButton(direction_t direction);
 
-    state_t upButtonPressed(state_t currentState);
-    state_t upButtonReleased(state_t currentState);
-    state_t downButtonPressed(state_t currentState);
-    state_t downButtonReleased(state_t currentState);
-    state_t leftButtonPressed(state_t currentState);
-    state_t leftButtonReleased(state_t currentState);
-    state_t rightButtonPressed(state_t currentState);
-    state_t rightButtonReleased(state_t currentState);
-    state_t enterButtonPressed(state_t currentState);
-    state_t enterButtonReleased(state_t currentState);
-
-    virtual state_t cupsChanged(state_t currentState, unsigned int numCups);
+    virtual state_t upButtonPressed(state_t currentState);
+    virtual state_t downButtonPressed(state_t currentState);
+    virtual state_t leftButtonPressed(state_t currentState);
+    virtual state_t rightButtonPressed(state_t currentState);
+    virtual state_t enterButtonReleased(state_t currentState);
 private:
     Display *display_;
     Button *buttons_[Display::kHeight][Display::kWidth];

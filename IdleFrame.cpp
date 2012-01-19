@@ -22,7 +22,7 @@ IdleFrame::enter()
 
     getDisplay()->pushCursorPos();
     getDisplay()->setCursorPos(0, 0);
-    getDisplay()->print("  Welcome to KSDA           PONG");
+    getDisplay()->print("  Welcome to KSDA        PONG TABLE");
     getDisplay()->popCursorPos();
 }
 
@@ -35,9 +35,17 @@ IdleFrame::exit()
 void
 IdleFrame::initializeButtons()
 {
-    addButton(3, 8, string("TEST"), static_cast<buttoncb_t>(&IdleFrame::testButtonClicked));
+    addButton(2, 8, string("LOGIN"), static_cast<buttoncb_t>(&IdleFrame::testButtonClicked));
+    addButton(3, 0, string("MUSIC"), static_cast<buttoncb_t>(&IdleFrame::testButtonClicked));
+    addButton(3, 8, string("CREATE"), static_cast<buttoncb_t>(&IdleFrame::testButtonClicked));
+    addButton(3, 16, string("VIEW"), static_cast<buttoncb_t>(&IdleFrame::viewButtonClicked));
 }
 
+state_t
+IdleFrame::viewButtonClicked(state_t currentState, string label)
+{
+    return kViewState;
+}
 state_t
 IdleFrame::testButtonClicked(state_t currentState, string label)
 {

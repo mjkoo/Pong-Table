@@ -9,15 +9,20 @@ set(HDRS
     ./Display.h
     ./Frame.h
     ./IdleFrame.h
+    ./ListFrame.h
     ./Player.h
+    ./ViewFrame.h
 )
 
 set(SRCS
     ./main.cpp
     ./ButtonFrame.cpp
     ./Display.cpp
+    ./Frame.cpp
     ./IdleFrame.cpp
+    ./ListFrame.cpp
     ./Player.cpp
+    ./ViewFrame.cpp
 )
 
 set(Boost_USE_STATIC_LIBS OFF)

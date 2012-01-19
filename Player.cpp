@@ -7,6 +7,7 @@
 #include <assert.h>
 
 #include "IdleFrame.h"
+#include "ViewFrame.h"
 
 using namespace std;
 
@@ -30,6 +31,7 @@ Player::Player(Display *display)
     stateMap_()
 {
     stateMap_.insert(pair<state_t, Frame *>(kIdleState, new IdleFrame(display)));
+    stateMap_.insert(pair<state_t, Frame *>(kViewState, new ViewFrame(display)));
 }
 
 Player::~Player()
@@ -68,7 +70,6 @@ Player::run()
     while (1)
     {
         cin >> hex >> currentInput;
-        cout << currentInput << endl;
 
         /* Check for cup state change */
         if ((lastInput & kCupMask) != (currentInput & kCupMask))

@@ -83,7 +83,7 @@ ButtonFrame::enter()
         for (col = 0; col < Display::kWidth; col++)
             if (buttons_[row][col] != NULL) {
                 focusButton(row, col);
-                break;
+                return;
             }
 }
 
@@ -109,7 +109,7 @@ void
 ButtonFrame::addButton(unsigned int row, unsigned int col, string label, buttoncb_t cb)
 {
     assert(row < Display::kHeight);
-    assert(col + label.length() < Display::kWidth);
+    assert(col + label.length() <= Display::kWidth);
 
     buttons_[row][col] = new Button(row, col, label, cb);
 }
@@ -136,12 +136,12 @@ ButtonFrame::focusNextButton(direction_t direction)
     if (direction == UP) {
         col = currentButton_.second;
         for (row = currentButton_.first - 1; row >= 0; row--)
-            for (dc = 1; dc < Display::kWidth; dc++) {
-                if (col + dc < Display::kHeight && buttons_[row][col + dc] != NULL) {
+            for (dc = 0; dc < Display::kWidth; dc++) {
+                if ((col + dc) < Display::kWidth && buttons_[row][col + dc] != NULL) {
                     focusButton(row, col + dc);
                     return;
                 }
-                if (col - dc >= 0 && buttons_[row][col - dc] != NULL) {
+                if ((col - dc >= 0) && buttons_[row][col - dc] != NULL) {
                     focusButton(row, col - dc);
                     return;
                 }
@@ -149,8 +149,8 @@ ButtonFrame::focusNextButton(direction_t direction)
     } else if (direction == DOWN) {
         col = currentButton_.second;
         for (row = currentButton_.first + 1; row < Display::kHeight; row++)
-            for (dc = 1; dc < Display::kWidth; dc++) {
-                if (col + dc < Display::kHeight && buttons_[row][col + dc] != NULL) {
+            for (dc = 0; dc < Display::kWidth; dc++) {
+                if (col + dc < Display::kWidth && buttons_[row][col + dc] != NULL) {
                     focusButton(row, col + dc);
                     return;
                 }
@@ -162,24 +162,22 @@ ButtonFrame::focusNextButton(direction_t direction)
     } else if (direction == LEFT) {
         row = currentButton_.first;
         for (col = currentButton_.second - 1; col >=0; col--)
-            if (buttons_[row][col] != NULL)
+            if (buttons_[row][col] != NULL) {
                 focusButton(row, col);
+                return;
+            }
     } else if (direction == RIGHT) {
         row = currentButton_.first;
         for (col = currentButton_.second + 1; col < Display::kWidth; col++)
-            if (buttons_[row][col] != NULL)
+            if (buttons_[row][col] != NULL) {
                 focusButton(row, col);
+                return;
+            }
     }
 }
 
 state_t
 ButtonFrame::upButtonPressed(state_t currentState)
-{
-    return currentState;
-}
-
-state_t
-ButtonFrame::upButtonReleased(state_t currentState)
 {
     focusNextButton(UP);
     return currentState;
@@ -188,24 +186,12 @@ ButtonFrame::upButtonReleased(state_t currentState)
 state_t
 ButtonFrame::downButtonPressed(state_t currentState)
 {
-    return currentState;
-}
-
-state_t
-ButtonFrame::downButtonReleased(state_t currentState)
-{
     focusNextButton(DOWN);
     return currentState;
 }
 
 state_t
 ButtonFrame::leftButtonPressed(state_t currentState)
-{
-    return currentState;
-}
-
-state_t
-ButtonFrame::leftButtonReleased(state_t currentState)
 {
     focusNextButton(LEFT);
     return currentState;
@@ -214,19 +200,7 @@ ButtonFrame::leftButtonReleased(state_t currentState)
 state_t
 ButtonFrame::rightButtonPressed(state_t currentState)
 {
-    return currentState;
-}
-
-state_t
-ButtonFrame::rightButtonReleased(state_t currentState)
-{
     focusNextButton(RIGHT);
-    return currentState;
-}
-
-state_t
-ButtonFrame::enterButtonPressed(state_t currentState)
-{
     return currentState;
 }
 
@@ -239,11 +213,5 @@ ButtonFrame::enterButtonReleased(state_t currentState)
     col = currentButton_.second;
 
     return buttons_[row][col]->invoke(this, currentState);
-}
-
-state_t
-ButtonFrame::cupsChanged(state_t currentState, unsigned int numCups)
-{
-
 }
 

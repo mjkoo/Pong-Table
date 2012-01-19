@@ -18,8 +18,8 @@ public:
     void exit();
 protected:
     void initializeButtons();
-    void updateCups(unsigned short cupState);
 
+    state_t viewButtonClicked(state_t currentState, std::string label);
     state_t testButtonClicked(state_t currentState, std::string label);
 };
 
