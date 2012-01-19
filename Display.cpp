@@ -3,8 +3,10 @@
  */
 #include "Display.h"
 
-#include <string>
+//TEMP
+#include <iostream>
 
+#include <assert.h>
 #include <fcntl.h>
 #include <string.h>
 #include <termios.h>
@@ -13,7 +15,6 @@ using namespace std;
 
 Display::Display(string dev)
   : ttyfd_(0),
-    displayControl_(0),
     cursorPos_(0, 0),
     cursorStack_()
 {
@@ -72,8 +73,8 @@ Display::setCursorPos(unsigned int row, unsigned int col)
 {
     unsigned int rowOffset[4] = {0x00, 0x40, 0x14, 0x54};
 
-    if (row >= kHeight || col >= kWidth)
-        return;
+    assert(row < kHeight);
+    assert(col < kWidth);
 
     command(kSetCursorPos + rowOffset[row] + col);
     cursorPos_.first = row;
@@ -83,23 +84,7 @@ Display::setCursorPos(unsigned int row, unsigned int col)
 void
 Display::setCursorVisible(bool visible)
 {
-    if (visible)
-        displayControl_ |= kCursorVisible;
-    else
-        displayControl_ &= ~kCursorVisible;
-
-    command(kDisplayControl | displayControl_);
-}
-
-void
-Display::setCursorBlinking(bool blinking)
-{
-    if (blinking)
-        displayControl_ |= kCursorBlinking;
-    else
-        displayControl_ &= ~kCursorBlinking;
-
-    command(kDisplayControl | displayControl_);
+    command(visible ? kCursorOn : kCursorOff);
 }
 
 void
@@ -111,7 +96,11 @@ Display::pushCursorPos()
 void
 Display::popCursorPos()
 {
-    cursorPos_ = cursorStack_.top();
+    pair<unsigned int, unsigned int> pos;
+
+    pos = cursorStack_.top();
+    setCursorPos(pos.first, pos.second);
+
     cursorStack_.pop();
 }
 

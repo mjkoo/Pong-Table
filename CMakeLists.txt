@@ -5,12 +5,19 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 project(pongtable)
 
 set(HDRS
+    ./ButtonFrame.h
     ./Display.h
+    ./Frame.h
+    ./IdleFrame.h
+    ./Player.h
 )
 
 set(SRCS
     ./main.cpp
+    ./ButtonFrame.cpp
     ./Display.cpp
+    ./IdleFrame.cpp
+    ./Player.cpp
 )
 
 set(Boost_USE_STATIC_LIBS OFF)
