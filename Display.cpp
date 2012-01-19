@@ -1,3 +1,6 @@
+/* TTY initialization from http://en.wikibooks.org/wiki/Serial_Programming/Serial_Linux
+ * SerLCD functions referenced from http://arduino.cc/playground/Code/SerLCD
+ */
 #include "Display.h"
 
 #include <string>
@@ -5,15 +8,15 @@
 #include <fcntl.h>
 #include <string.h>
 #include <termios.h>
-#include <unistd.h>
 
 using namespace std;
 
 Display::Display(string dev)
   : ttyfd_(0),
+    displayControl_(0),
+    cursorPos_(0, 0),
     cursorStack_()
 {
-    /* TTY initialization from http://en.wikibooks.org/wiki/Serial_Programming/Serial_Linux */
     struct termios tio;
 
     ttyfd_ = open(dev.c_str(), O_RDWR | O_NONBLOCK);
@@ -60,17 +63,8 @@ Display::clearRow(unsigned int row)
 void
 Display::print(string data)
 {
-    size_t i, len;
-
-    /* Write the data in 16 byte chunks */
-    len = data.length();
-    for (i = 0; i < len; i += 16) {
-        write(ttyfd_, data.substr(i, 16).c_str(), 16);
-        usleep(1);
-    }
-
-    /* Determine the remaning bits by masking out len */
-    write(ttyfd_, data.substr(len & 0xf0, string::npos).c_str(), len & 0x0f);
+    write(ttyfd_, data.c_str(), data.length());
+    return;
 }
 
 void
@@ -89,13 +83,23 @@ Display::setCursorPos(unsigned int row, unsigned int col)
 void
 Display::setCursorVisible(bool visible)
 {
+    if (visible)
+        displayControl_ |= kCursorVisible;
+    else
+        displayControl_ &= ~kCursorVisible;
 
+    command(kDisplayControl | displayControl_);
 }
 
 void
 Display::setCursorBlinking(bool blinking)
 {
+    if (blinking)
+        displayControl_ |= kCursorBlinking;
+    else
+        displayControl_ &= ~kCursorBlinking;
 
+    command(kDisplayControl | displayControl_);
 }
 
 void

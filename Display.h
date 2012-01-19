@@ -35,6 +35,7 @@ private:
     void writeByte(unsigned char byte);
 
     int ttyfd_;
+    unsigned int displayControl_;
     std::pair<unsigned int, unsigned int> cursorPos_;
     std::stack<std::pair<unsigned int, unsigned int> > cursorStack_;
 };
