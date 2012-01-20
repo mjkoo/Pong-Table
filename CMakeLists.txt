@@ -6,6 +6,7 @@ project(pongtable)
 
 set(HDRS
     ./ButtonFrame.h
+    ./CreateFrame.h
     ./Database.h
     ./Display.h
     ./ErrorFrame.h
@@ -22,6 +23,7 @@ set(HDRS
 set(SRCS
     ./main.cpp
     ./ButtonFrame.cpp
+    ./CreateFrame.cpp
     ./Database.cpp
     ./Display.cpp
     ./ErrorFrame.cpp

@@ -6,6 +6,7 @@
 
 #include <assert.h>
 
+#include "CreateFrame.h"
 #include "ErrorFrame.h"
 #include "IdleFrame.h"
 #include "LoginFrame.h"
@@ -38,8 +39,10 @@ Player::Player(string displayDevice, string databaseFile)
 {
     stateMap_.insert(pair<state_t, Frame *>(kIdleState, new IdleFrame(this)));
     stateMap_.insert(pair<state_t, Frame *>(kLoginState, new LoginFrame(this)));
+    stateMap_.insert(pair<state_t, Frame *>(kCreateState, new CreateFrame(this)));
     stateMap_.insert(pair<state_t, Frame *>(kViewState, new ViewFrame(this)));
-    stateMap_.insert(pair<state_t, Frame *>(kPasswordState, new PasswordFrame(this)));
+    stateMap_.insert(pair<state_t, Frame *>(kLoginPasswordState, new PasswordFrame(this)));
+    stateMap_.insert(pair<state_t, Frame *>(kCreatePasswordState, new PasswordFrame(this)));
     stateMap_.insert(pair<state_t, Frame *>(kErrorState, new ErrorFrame(this)));
 }
 
@@ -118,6 +121,7 @@ Player::run()
     while (1)
     {
         cin >> hex >> currentInput;
+        cout << currentInput << endl;
 
         /* Check for cup state change */
         if ((lastInput & kCupMask) != (currentInput & kCupMask))

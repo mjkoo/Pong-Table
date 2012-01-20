@@ -33,6 +33,7 @@ void
 PasswordFrame::exit()
 {
     ButtonFrame::exit();
+    password_ = "";
 }
 
 void
@@ -97,6 +98,15 @@ PasswordFrame::rightButtonPressed(state_t currentState)
 state_t
 PasswordFrame::doneButtonClicked(state_t currentState, string label)
 {
-    cout << "Username: " << getPlayer()->getName() << "Password: " << password_ << endl;
+    if (password_.length() < kPasswordLength)
+        return currentState;
+
+    cout << "Username: " << getPlayer()->getName() << " Password: " << password_ << endl;
+
+    if (currentState == kLoginPasswordState)
+        cout << getPlayer()->getDatabase()->login(getPlayer()->getName(), password_) << endl;
+    else if (currentState == kCreatePasswordState)
+        cout << getPlayer()->getDatabase()->create(getPlayer()->getName(), password_) << endl;
+
     return kIdleState;
 }

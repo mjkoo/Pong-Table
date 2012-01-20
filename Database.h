@@ -2,6 +2,7 @@
 #define DATABASE_H_
 
 #include <string>
+#include <vector>
 
 #include <sqlite.h>
 
@@ -11,9 +12,12 @@ public:
     Database(std::string filename);
     virtual ~Database();
 
-    bool teamExists(std::string teamName);
-    bool checkPassword(std::string teamName, std::string password);
-    void setPassword(std::string teamName, std::string password);
+    bool login(std::string name, std::string password);
+    bool create(std::string name, std::string password);
+    std::vector<std::string> getStandings();
+    void recordWin(std::string name);
+    void recordLoss(std::string name);
+    void recordTie(std::string name);
 
 private:
     sqlite *db_; 

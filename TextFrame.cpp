@@ -30,6 +30,7 @@ void
 TextFrame::exit()
 {
     ButtonFrame::exit();
+    text_ = "";
 }
 
 string
