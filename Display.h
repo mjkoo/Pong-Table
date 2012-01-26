@@ -15,7 +15,7 @@ public:
     static const unsigned int kCursorOn = 0x0d;
     static const unsigned int kCursorOff = 0x0c;
 
-    Display(std::string dev);
+    Display(int ttyfd);
     virtual ~Display();
 
     void clear();

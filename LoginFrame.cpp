@@ -35,6 +35,9 @@ LoginFrame::exit()
 state_t
 LoginFrame::doneButtonClicked(state_t currentState, string label)
 {
+    if (getText().length() == 0)
+        return currentState;
+
     getPlayer()->setName(getText());
     cout << getPlayer()->getName() << endl;
     return kLoginPasswordState;

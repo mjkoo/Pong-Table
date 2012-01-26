@@ -24,22 +24,48 @@ Database::~Database()
 bool
 Database::login(string name, string password)
 {
-    int n;
-    const char *tail, **value, **colname;
+    /* Bad, SQL Injection */
+    string query;
+    table_t table;
+
+    query = "select password from teams where name='" + name + "';";
+    table = select(query);
+    
+    return !table.empty() && table[0][0] == password;
+}
+
+bool
+Database::create(string name, string password)
+{
+    /* Bad, SQL Injection */
+    string query;
+
+    query = "insert into teams(name, password) values('" + name +
+        "', '" + password + "');";
+    cout << query << endl;
+    return executeCommand(query);
+}
+
+table_t
+Database::select(string query)
+{
+    int i, n;
+    const char *tail, **values, **colname;
     char *errmsg;
     sqlite_vm *vm;
-    bool ret = false;
-
-    /* Bad, SQL Injection */
-    string query = "select password from teams where name='" + name + "';";
+    table_t ret;
 
     if (sqlite_compile(db_, query.c_str(), &tail, &vm, &errmsg) != SQLITE_OK) {
         sqlite_freemem(errmsg);
-        return false;
+        return ret;
     }
    
-    if (sqlite_step(vm, &n, &value, &colname) == SQLITE_ROW)
-        ret = password == string(value[0]);
+    while (sqlite_step(vm, &n, &values, &colname) == SQLITE_ROW) {
+        row_t row;
+        for (i = 0; i < n; i++)
+            row.push_back(string(values[i]));
+        ret.push_back(row);
+    }
 
     sqlite_finalize(vm, &errmsg);
     sqlite_freemem(errmsg);
@@ -48,19 +74,13 @@ Database::login(string name, string password)
 }
 
 bool
-Database::create(string name, string password)
+Database::executeCommand(string query)
 {
     int n;
     const char *tail, **value, **colname;
     char *errmsg;
     sqlite_vm *vm;
     bool ret = false;
-
-    /* Bad, SQL Injection */
-    string query = "insert into teams(name, password) values('"
-        + name + "', '" + password + "');";
-
-    cout << query << endl;
 
     if (sqlite_compile(db_, query.c_str(), &tail, &vm, &errmsg) != SQLITE_OK) {
         sqlite_freemem(errmsg);
@@ -74,3 +94,4 @@ Database::create(string name, string password)
 
     return ret;
 }
+

@@ -2,9 +2,12 @@
 
 //TEMP
 #include <iostream>
+#define CONSOLE
+
 #include <utility>
 
 #include <assert.h>
+#include <unistd.h>
 
 #include "CreateFrame.h"
 #include "ErrorFrame.h"
@@ -29,13 +32,17 @@ namespace {
     }
 }
 
-Player::Player(string displayDevice, string databaseFile)
+Player::Player(int serialDevice, string databaseFile)
   : currentState_(kNoneState),
     currentFrame_(NULL),
     stateMap_(),
-    display_(Display(displayDevice)),
+    serialDevice_(serialDevice),
+    display_(Display(serialDevice)),
     database_(Database(databaseFile)),
-    name_()
+    name_(),
+    thread_(),
+    other_(NULL),
+    cupCount_(0)
 {
     stateMap_.insert(pair<state_t, Frame *>(kIdleState, new IdleFrame(this)));
     stateMap_.insert(pair<state_t, Frame *>(kLoginState, new LoginFrame(this)));
@@ -120,7 +127,12 @@ Player::run()
     changeState(kIdleState);
     while (1)
     {
+#ifdef CONSOLE
         cin >> hex >> currentInput;
+#else
+        while (read(serialDevice_, &currentInput, sizeof(unsigned short)) == 0)
+            ;
+#endif
         cout << currentInput << endl;
 
         /* Check for cup state change */

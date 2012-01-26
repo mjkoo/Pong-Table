@@ -7,35 +7,17 @@
 #include <iostream>
 
 #include <assert.h>
-#include <fcntl.h>
-#include <string.h>
-#include <termios.h>
 
 using namespace std;
 
-Display::Display(string dev)
-  : ttyfd_(0),
+Display::Display(int ttyfd)
+  : ttyfd_(ttyfd),
     cursorPos_(0, 0),
     cursorStack_()
 {
-    struct termios tio;
-
-    ttyfd_ = open(dev.c_str(), O_RDWR | O_NONBLOCK);
-
-    memset(&tio, 0, sizeof(tio));
-    tio.c_iflag = 0;
-    tio.c_oflag = 0;
-    tio.c_cflag = CS8 | CREAD | CLOCAL;
-    tio.c_lflag = 0;
-    tio.c_cc[VMIN] = 1;
-    tio.c_cc[VTIME] = 0;
-    
-    cfsetospeed(&tio, B9600);
-    cfsetispeed(&tio, B9600);
-    tcsetattr(ttyfd_, TCSANOW, &tio);
-
     clear();
     setCursorPos(0, 0);
+    setCursorVisible(true);
 }
 
 Display::~Display()

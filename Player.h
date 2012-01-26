@@ -4,6 +4,8 @@
 #include <map>
 #include <string>
 
+#include <boost/thread/thread.hpp>
+
 #include "Database.h"
 #include "Display.h"
 
@@ -37,7 +39,7 @@ public:
     static const unsigned int kEnterMask = 0x0400;
     static const unsigned int kCupMask = 0x03ff;
 
-    Player(std::string displayDevice, std::string databaseFile);
+    Player(int serialDevice, std::string databaseFile);
     virtual ~Player();
 
     Display *getDisplay();
@@ -55,9 +57,15 @@ private:
     state_t currentState_;
     Frame *currentFrame_;
     std::map<state_t, Frame *> stateMap_;
+    int serialDevice_;
     Display display_;
     Database database_;
     std::string name_;
+
+    boost::thread thread_;
+    Player *other_;
+    unsigned int cupCount_;
+    
 };
 
 #endif /* Player_H_ */

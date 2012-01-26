@@ -35,6 +35,9 @@ CreateFrame::exit()
 state_t
 CreateFrame::doneButtonClicked(state_t currentState, string label)
 {
+    if (getText().length() == 0)
+        return currentState;
+
     getPlayer()->setName(getText());
     cout << getPlayer()->getName() << endl;
     return kCreatePasswordState;
