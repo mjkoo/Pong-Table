@@ -43,7 +43,7 @@ ViewFrame::initializeList()
 }
 
 state_t
-ViewFrame::enterButtonReleased(state_t currentState)
+ViewFrame::enterButtonReleased(state_t)
 {
     return kIdleState;
 }

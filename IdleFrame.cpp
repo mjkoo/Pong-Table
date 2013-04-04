@@ -36,31 +36,26 @@ void
 IdleFrame::initializeButtons()
 {
     addButton(2, 8, string("LOGIN"), static_cast<buttoncb_t>(&IdleFrame::loginButtonClicked));
-    addButton(3, 0, string("MUSIC"), static_cast<buttoncb_t>(&IdleFrame::testButtonClicked));
+    //addButton(3, 0, string("MUSIC"), static_cast<buttoncb_t>(&IdleFrame::testButtonClicked));
     addButton(3, 8, string("CREATE"), static_cast<buttoncb_t>(&IdleFrame::createButtonClicked));
     addButton(3, 16, string("VIEW"), static_cast<buttoncb_t>(&IdleFrame::viewButtonClicked));
 }
 
 state_t
-IdleFrame::loginButtonClicked(state_t currentState, string label)
+IdleFrame::loginButtonClicked(state_t, const string&)
 {
     return kLoginState;
 }
 
 state_t
-IdleFrame::createButtonClicked(state_t currentState, string label)
+IdleFrame::createButtonClicked(state_t, const string&)
 {
     return kCreateState;
 }
 
 state_t
-IdleFrame::viewButtonClicked(state_t currentState, string label)
+IdleFrame::viewButtonClicked(state_t, const string&)
 {
     return kViewState;
 }
 
-state_t
-IdleFrame::testButtonClicked(state_t currentState, string label)
-{
-    cout << label << endl;
-}

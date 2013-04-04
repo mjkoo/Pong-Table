@@ -1,7 +1,5 @@
 #include "ErrorFrame.h"
 
-#include <iostream>
-
 using namespace std;
 
 ErrorFrame::ErrorFrame(Player *player)
@@ -48,7 +46,7 @@ ErrorFrame::initializeButtons()
 }
 
 state_t
-ErrorFrame::okButtonClicked(state_t currentState, string label)
+ErrorFrame::okButtonClicked(state_t, const string&)
 {
     return returnState_;
 }

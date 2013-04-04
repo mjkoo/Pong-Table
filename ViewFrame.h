@@ -19,7 +19,7 @@ public:
 protected:
     void initializeList();
 
-    state_t enterButtonReleased(state_t currentState);
+    state_t enterButtonReleased(state_t);
 };
 
 #endif /* VIEWFRAME_H_*/

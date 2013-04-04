@@ -33,7 +33,7 @@ CreateFrame::exit()
 }
 
 state_t
-CreateFrame::doneButtonClicked(state_t currentState, string label)
+CreateFrame::doneButtonClicked(state_t currentState, const string&)
 {
     if (getText().length() == 0)
         return currentState;

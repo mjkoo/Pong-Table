@@ -39,18 +39,18 @@ public:
     static const unsigned int kEnterMask = 0x0400;
     static const unsigned int kCupMask = 0x03ff;
 
-    Player(int serialDevice, std::string databaseFile);
+    Player(int serialDevice, const std::string& databaseFile);
     virtual ~Player();
 
     Display *getDisplay();
     Database *getDatabase();
     
     std::string getName();
-    void setName(std::string name);
+    void setName(const std::string& name);
 
     void run();
 protected:
-    void error(std::string msg, state_t returnState);
+    void error(const std::string& msg, state_t returnState);
     void changeState(state_t nextState);
 
 private:
@@ -66,6 +66,8 @@ private:
     Player *other_;
     unsigned int cupCount_;
     
+    Player(const Player&);
+    Player& operator=(const Player&);
 };
 
 #endif /* Player_H_ */

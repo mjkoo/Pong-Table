@@ -40,7 +40,7 @@ TextFrame::getText()
 }
 
 void
-TextFrame::setText(string text)
+TextFrame::setText(const string& text)
 {
     text_ = text;
 
@@ -68,8 +68,8 @@ TextFrame::initializeButtons()
         }
     }
 
-    addButton(0, 16, string("DONE"), static_cast<buttoncb_t>(&TextFrame::doneButtonClicked));
-    addButton(kTextRow, 0, string(), static_cast<buttoncb_t>(&TextFrame::backspaceButtonClicked));
+    addButton(0, 16, "DONE", static_cast<buttoncb_t>(&TextFrame::doneButtonClicked));
+    addButton(kTextRow, 0, "", static_cast<buttoncb_t>(&TextFrame::backspaceButtonClicked));
     addButton(kKeyboardRow + 1, 17, "^", static_cast<buttoncb_t>(&TextFrame::shiftButtonClicked));
     addButton(kKeyboardRow + 1, 19, "_", static_cast<buttoncb_t>(&TextFrame::spaceButtonClicked));
 }
@@ -114,13 +114,13 @@ TextFrame::downButtonPressed(state_t currentState)
 }
 
 state_t
-TextFrame::doneButtonClicked(state_t currentState, string label)
+TextFrame::doneButtonClicked(state_t currentState, const string&)
 {
     return currentState;
 }
 
 state_t
-TextFrame::letterButtonClicked(state_t currentState, string label)
+TextFrame::letterButtonClicked(state_t currentState, const string& label)
 {
     if (text_.length() >= kMaxLength)
         return currentState;
@@ -140,7 +140,7 @@ TextFrame::letterButtonClicked(state_t currentState, string label)
 }
 
 state_t
-TextFrame::backspaceButtonClicked(state_t currentState, string label)
+TextFrame::backspaceButtonClicked(state_t currentState, const string&)
 {
     if (text_.size() == 0)
         return currentState;
@@ -154,14 +154,14 @@ TextFrame::backspaceButtonClicked(state_t currentState, string label)
 }
 
 state_t
-TextFrame::shiftButtonClicked(state_t currentState, string label)
+TextFrame::shiftButtonClicked(state_t currentState, const string&)
 {
     toggleShift();
     return currentState;
 }
 
 state_t
-TextFrame::spaceButtonClicked(state_t currentState, string label)
+TextFrame::spaceButtonClicked(state_t currentState, const string&)
 {
     return letterButtonClicked(currentState, " ");
 }

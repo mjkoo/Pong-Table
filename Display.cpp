@@ -42,7 +42,7 @@ Display::clearRow(unsigned int row)
 }
 
 void
-Display::print(string data)
+Display::print(const string& data)
 {
     write(ttyfd_, data.c_str(), data.length());
     return;

@@ -20,8 +20,6 @@ ListFrame::~ListFrame()
 void
 ListFrame::enter()
 {
-    unsigned int i;
-
     player_->getDisplay()->clear();
     initializeList();
     refresh();
@@ -40,7 +38,7 @@ ListFrame::getPlayer()
 }
 
 void
-ListFrame::append(string data)
+ListFrame::append(const string& data)
 {
     assert(data.length() <= Display::kWidth);
     items_.push_back(data);
@@ -48,7 +46,7 @@ ListFrame::append(string data)
 }
 
 void
-ListFrame::insert(unsigned int pos, string data)
+ListFrame::insert(unsigned int pos, const string& data)
 {
     assert(data.length() <= Display::kWidth);
     assert(pos <= items_.size());

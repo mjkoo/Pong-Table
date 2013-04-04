@@ -29,7 +29,7 @@ protected:
     state_t leftButtonPressed(state_t currentState);
     state_t rightButtonPressed(state_t currentState);
 
-    state_t doneButtonClicked(state_t currentState, std::string label);
+    state_t doneButtonClicked(state_t currentState, const std::string&);
 private:
     std::string password_;
 };

@@ -6,7 +6,8 @@
 
 using namespace std;
 
-Database::Database(string filename)
+Database::Database(const string& filename)
+  : db_(NULL)
 {
     char *errmsg;
     db_ = sqlite_open(filename.c_str(), 0666, &errmsg);
@@ -22,7 +23,7 @@ Database::~Database()
 }
 
 bool
-Database::login(string name, string password)
+Database::login(const string& name, const string& password)
 {
     /* Bad, SQL Injection */
     string query;
@@ -35,7 +36,7 @@ Database::login(string name, string password)
 }
 
 bool
-Database::create(string name, string password)
+Database::create(const string& name, const string& password)
 {
     /* Bad, SQL Injection */
     string query;
@@ -47,7 +48,7 @@ Database::create(string name, string password)
 }
 
 table_t
-Database::select(string query)
+Database::select(const string& query)
 {
     int i, n;
     const char *tail, **values, **colname;
@@ -74,7 +75,7 @@ Database::select(string query)
 }
 
 bool
-Database::executeCommand(string query)
+Database::executeCommand(const string& query)
 {
     int n;
     const char *tail, **value, **colname;

@@ -17,7 +17,7 @@ public:
     void enter();
     void exit();
 protected:
-    state_t doneButtonClicked(state_t currentState, std::string label);
+    state_t doneButtonClicked(state_t currentState, const std::string&);
 };
 
 #endif /* LOGINFRAME_H_*/

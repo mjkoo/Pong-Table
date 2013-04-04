@@ -10,7 +10,7 @@
 #include "Frame.h"
 
 class ButtonFrame;
-typedef state_t (ButtonFrame::*buttoncb_t) (state_t currentState, std::string label);
+typedef state_t (ButtonFrame::*buttoncb_t) (state_t currentState, const std::string& label);
 
 enum direction_t
 {
@@ -25,7 +25,8 @@ class Button
 public:
     friend class ButtonFrame;
 
-    Button(unsigned int row, unsigned int col, std::string label, buttoncb_t cb);
+    Button(unsigned int row, unsigned int col,
+            const std::string& label, buttoncb_t cb);
     virtual ~Button();
 
     unsigned int getRow();
@@ -53,7 +54,8 @@ public:
     unsigned int getCursorCol();
 protected:
     virtual void initializeButtons();
-    void addButton(unsigned int row, unsigned int col, std::string label, buttoncb_t cb);
+    void addButton(unsigned int row, unsigned int col,
+            const std::string& label, buttoncb_t cb);
     void removeButton(unsigned int row, unsigned int col);
     void focusButton(unsigned int row, unsigned int col);
     void focusNextButton(direction_t direction);
@@ -67,6 +69,9 @@ private:
     Player *player_;
     Button *buttons_[Display::kHeight][Display::kWidth];
     std::pair<unsigned int, unsigned int> currentButton_;
+
+    ButtonFrame(const ButtonFrame&);
+    ButtonFrame& operator=(const ButtonFrame&);
 };
 
 #endif /* BUTTONFRAME_H_ */

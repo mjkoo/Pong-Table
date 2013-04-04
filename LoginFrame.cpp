@@ -33,7 +33,7 @@ LoginFrame::exit()
 }
 
 state_t
-LoginFrame::doneButtonClicked(state_t currentState, string label)
+LoginFrame::doneButtonClicked(state_t currentState, const string&)
 {
     if (getText().length() == 0)
         return currentState;

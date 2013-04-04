@@ -61,7 +61,7 @@ Frame::enterButtonReleased(state_t currentState)
 }
 
 state_t
-Frame::cupsChanged(state_t currentState, unsigned int numCups)
+Frame::cupsChanged(state_t currentState, unsigned int)
 {
     return currentState;
 }

@@ -5,7 +5,7 @@
 using namespace std;
 
 Button::Button(unsigned int row, unsigned int col,
-               string label, buttoncb_t cb)
+               const string& label, buttoncb_t cb)
   : row_(row),
     col_(col),
     label_(label),
@@ -118,7 +118,8 @@ ButtonFrame::initializeButtons()
 }
 
 void
-ButtonFrame::addButton(unsigned int row, unsigned int col, string label, buttoncb_t cb)
+ButtonFrame::addButton(unsigned int row, unsigned int col,
+        const string& label, buttoncb_t cb)
 {
     assert(row < Display::kHeight);
     assert(col + label.length() <= Display::kWidth);
@@ -153,12 +154,11 @@ ButtonFrame::focusButton(unsigned int row, unsigned int col)
 void
 ButtonFrame::focusNextButton(direction_t direction)
 {
-    int dc;
-    int row, col;
+    unsigned int dc, row, col;
 
     if (direction == UP) {
         col = currentButton_.second;
-        for (row = currentButton_.first - 1; row >= 0; row--)
+        for (row = currentButton_.first - 1; row-- > 0; )
             for (dc = 0; dc < Display::kWidth; dc++) {
                 if (col + dc < Display::kWidth && buttons_[row][col + dc] != NULL) {
                     focusButton(row, col + dc);
@@ -187,7 +187,7 @@ ButtonFrame::focusNextButton(direction_t direction)
             return;
 
         row = currentButton_.first;
-        for (col = currentButton_.second - 1; col >=0; col--)
+        for (col = currentButton_.second - 1; col-- > 0; )
             if (buttons_[row][col] != NULL) {
                 focusButton(row, col);
                 return;

@@ -23,7 +23,7 @@ public:
 protected:
     void initializeButtons();
 
-    state_t okButtonClicked(state_t currentState, std::string label);
+    state_t okButtonClicked(state_t, const std::string&);
 private:
     state_t returnState_;
     std::string msg_;

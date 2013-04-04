@@ -32,13 +32,13 @@ namespace {
     }
 }
 
-Player::Player(int serialDevice, string databaseFile)
+Player::Player(int serialDevice, const string& databaseFile)
   : currentState_(kNoneState),
     currentFrame_(NULL),
     stateMap_(),
     serialDevice_(serialDevice),
     display_(Display(serialDevice)),
-    database_(Database(databaseFile)),
+    database_(databaseFile),
     name_(),
     thread_(),
     other_(NULL),
@@ -79,13 +79,13 @@ Player::getName()
 }
 
 void
-Player::setName(string name)
+Player::setName(const string& name)
 {
     name_ = name;
 }
 
 void
-Player::error(string msg, state_t returnState)
+Player::error(const string& msg, state_t returnState)
 {
     ErrorFrame *ef;
     map<state_t, Frame *>::iterator it;

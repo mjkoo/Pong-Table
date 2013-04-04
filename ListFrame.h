@@ -22,8 +22,8 @@ public:
 
     Player *getPlayer();
 
-    void append(std::string data);
-    void insert(unsigned int pos, std::string data);
+    void append(const std::string& data);
+    void insert(unsigned int pos, const std::string& data);
     void remove(unsigned int pos);
     unsigned int size();
 protected:
@@ -36,6 +36,9 @@ private:
     Player *player_;
     unsigned int index_;
     std::vector<std::string> items_;
+
+    ListFrame(const ListFrame&);
+    ListFrame& operator=(const ListFrame&);
 };
 
 #endif /* LISTFRAME_H_ */

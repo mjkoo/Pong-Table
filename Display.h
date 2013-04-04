@@ -20,7 +20,7 @@ public:
 
     void clear();
     void clearRow(unsigned int row);
-    void print(std::string data);
+    void print(const std::string& data);
 
     void setCursorPos(unsigned int row, unsigned int col);
     void setCursorVisible(bool visible);

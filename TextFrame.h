@@ -24,7 +24,7 @@ public:
     void exit();
 
     std::string getText();
-    void setText(std::string text);
+    void setText(const std::string& text);
 protected:
     void initializeButtons();
 
@@ -33,11 +33,11 @@ protected:
     state_t upButtonPressed(state_t currentState);
     state_t downButtonPressed(state_t currentState);
 
-    virtual state_t doneButtonClicked(state_t currentState, std::string label);
-    state_t letterButtonClicked(state_t currentState, std::string label);
-    state_t backspaceButtonClicked(state_t currentState, std::string label);
-    state_t shiftButtonClicked(state_t currentState, std::string label);
-    state_t spaceButtonClicked(state_t currentState, std::string label);
+    virtual state_t doneButtonClicked(state_t currentState, const std::string&);
+    state_t letterButtonClicked(state_t currentState, const std::string& label);
+    state_t backspaceButtonClicked(state_t currentState, const std::string&);
+    state_t shiftButtonClicked(state_t currentState, const std::string&);
+    state_t spaceButtonClicked(state_t currentState, const std::string&);
 private:
     std::string text_;
     bool shift_;

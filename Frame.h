@@ -6,6 +6,8 @@
 class Frame
 {
 public:
+    virtual ~Frame() { }
+
     virtual void enter() = 0;
     virtual void exit() = 0;
 
@@ -20,7 +22,7 @@ public:
     virtual state_t enterButtonPressed(state_t currentState);
     virtual state_t enterButtonReleased(state_t currentState);
 
-    virtual state_t cupsChanged(state_t currentState, unsigned int numCups);
+    virtual state_t cupsChanged(state_t currentState, unsigned int);
 };
 
 #endif /* FRAME_H_ */

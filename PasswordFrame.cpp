@@ -96,7 +96,7 @@ PasswordFrame::rightButtonPressed(state_t currentState)
 }
 
 state_t
-PasswordFrame::doneButtonClicked(state_t currentState, string label)
+PasswordFrame::doneButtonClicked(state_t currentState, const string&)
 {
     if (password_.length() < kPasswordLength)
         return currentState;

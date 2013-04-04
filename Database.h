@@ -12,24 +12,26 @@ typedef std::vector<row_t> table_t;
 class Database
 {
 public:
-    Database(std::string filename);
+    explicit Database(const std::string& filename);
     virtual ~Database();
 
-    bool login(std::string name, std::string password);
-    bool create(std::string name, std::string password);
+    bool login(const std::string& name, const std::string& password);
+    bool create(const std::string& name, const std::string& password);
     table_t getStandings();
 
-    void recordWin(std::string name);
-    void recordLoss(std::string name);
-    void recordTie(std::string name);
+    void recordWin(const std::string& name);
+    void recordLoss(const std::string& name);
+    void recordTie(const std::string& name);
 
 private:
-    table_t select(std::string query);
-    bool executeCommand(std::string query);
+    table_t select(const std::string& query);
+    bool executeCommand(const std::string& query);
     
-
 private:
     sqlite *db_; 
+
+    Database(const Database&);
+    Database& operator=(const Database&);
 };
 
 #endif /* DATABASE_H_ */
