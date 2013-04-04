@@ -1,39 +1,43 @@
 cmake_minimum_required(VERSION 2.6)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake")
+set(CMAKE_MODULE_PATH
+        ${CMAKE_MODULE_PATH}
+        "${CMAKE_SOURCE_DIR}/cmake"
+        "${CMAKE_SOURCE_DIR}/cmake/modules"
+)
 
 project(pongtable)
 
 set(HDRS
-    ./ButtonFrame.h
-    ./CreateFrame.h
-    ./Database.h
-    ./Display.h
-    ./ErrorFrame.h
-    ./Frame.h
-    ./IdleFrame.h
-    ./ListFrame.h
-    ./LoginFrame.h
-    ./PasswordFrame.h
-    ./Player.h
-    ./TextFrame.h
-    ./ViewFrame.h
+    ./src/ButtonFrame.h
+    ./src/CreateFrame.h
+    ./src/Database.h
+    ./src/Display.h
+    ./src/ErrorFrame.h
+    ./src/Frame.h
+    ./src/IdleFrame.h
+    ./src/ListFrame.h
+    ./src/LoginFrame.h
+    ./src/PasswordFrame.h
+    ./src/Player.h
+    ./src/TextFrame.h
+    ./src/ViewFrame.h
 )
 
 set(SRCS
-    ./main.cpp
-    ./ButtonFrame.cpp
-    ./CreateFrame.cpp
-    ./Database.cpp
-    ./Display.cpp
-    ./ErrorFrame.cpp
-    ./Frame.cpp
-    ./IdleFrame.cpp
-    ./ListFrame.cpp
-    ./LoginFrame.cpp
-    ./PasswordFrame.cpp
-    ./Player.cpp
-    ./TextFrame.cpp
-    ./ViewFrame.cpp
+    ./src/main.cpp
+    ./src/ButtonFrame.cpp
+    ./src/CreateFrame.cpp
+    ./src/Database.cpp
+    ./src/Display.cpp
+    ./src/ErrorFrame.cpp
+    ./src/Frame.cpp
+    ./src/IdleFrame.cpp
+    ./src/ListFrame.cpp
+    ./src/LoginFrame.cpp
+    ./src/PasswordFrame.cpp
+    ./src/Player.cpp
+    ./src/TextFrame.cpp
+    ./src/ViewFrame.cpp
 )
 
 set(Boost_USE_STATIC_LIBS OFF)
