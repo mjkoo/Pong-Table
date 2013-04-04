@@ -40,7 +40,7 @@ set(SRCS
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.42.0 COMPONENTS thread REQUIRED)
+find_package(Boost 1.42.0 COMPONENTS thread system REQUIRED)
 find_package(MPDClient REQUIRED)
 find_package(SQLite REQUIRED)
 

@@ -3,9 +3,7 @@
  */
 #include "Display.h"
 
-//TEMP
-#include <iostream>
-
+#include <unistd.h>
 #include <assert.h>
 
 using namespace std;
